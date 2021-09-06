@@ -33,7 +33,29 @@ def show_neighbors(neighbors, dataset):
     plt.title(f'image and nearest neighbors')
     plt.imshow(gridded.permute(1, 2, 0))
     
-    
+def show_grid(count, labels, dataset, limit=32):
+    limit = 10
+    images = []
+    for j in range(12):
+        cluster = count[rx][0]
+        labels = np.array(labels)
+        indices = np.where(labels==cluster)[0]
+        
+        if not indices.size:
+            print(f'cluster: {cluster} is empty.')
+            return None
+        
+        for i in indices[:limit]:
+            image, _ = dataset[i]
+            images.append(image)
+        
+    gridded = make_grid(images)
+    plt.figure(figsize=(15, 10))
+    plt.title(f'cluster: {cluster}')
+    plt.imshow(gridded.permute(1, 2, 0))
+    plt.axis('off')
+
+
 def extract_features(model, dataset, batch_size=32):
     """
     Gets the output of a pytorch model given a dataset.

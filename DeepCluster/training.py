@@ -17,3 +17,4 @@ def train_epoch(model, optimizer, train_dataset, batch_size):
         pbar.set_description(f'training - loss: {total_loss / (batch + 1)}')
         loss.backward()
         optimizer.step()
+    return total_loss / (batch + 1)

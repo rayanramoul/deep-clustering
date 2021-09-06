@@ -6,10 +6,13 @@ from PIL import Image
 class CloudDataset(Dataset):
     def __init__(self, root, transforms=None, labels=[], limit=None):
         self.root = Path(root)
-        self.image_paths = list(Path(root).rglob('*.jpeg'))
+        #reg = "[\"|\'].*\.(?i:jpg|jpeg|gif|png|bmp)[\"|\']"
+        #reg = '.*\.(jpg|jpeg|png)$'
+        reg = "*.png"
+        self.image_paths = list(Path(root).rglob(reg))
         print("Number of cloud images : "+str(len(self.image_paths)))
         if limit:
-            self.image_paths = self.image_paths[:limit]
+            self.image_paths = self.image_paths #[:limit]
         self.labels = labels
         self.transforms = transforms
         self.classes = set([path.parts[-2] for path in self.image_paths])
